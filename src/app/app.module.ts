@@ -6,28 +6,25 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { UserSpaceModule } from './pages/user-space/user-space.module';
 
 const appRoutes: Routes = [
-  { path: 'user-space', loadChildren: () => import('./pages/user-space/user-space.module').then(m => m.UserSpaceModule) },
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent }
+  { path: '', pathMatch: 'full', component: LoginComponent },
+  {
+    path: 'user-space',
+    pathMatch: 'prefix',
+    loadChildren: () =>
+      import('./pages/user-space/user-space.module').then(
+        (m) => m.UserSpaceModule
+      ),
+  },
+  { path: 'login', pathMatch: 'full', component: LoginComponent },
+  { path: 'registration', pathMatch: 'full', component: RegistrationComponent },
 ];
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegistrationComponent,
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    FormsModule,
-    UserSpaceModule,
-  ],
+  declarations: [AppComponent, LoginComponent, RegistrationComponent],
+  imports: [BrowserModule, RouterModule.forRoot(appRoutes), FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
