@@ -1,25 +1,18 @@
 import { Injectable, ViewChildren } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
-  constructor(private httpClient: HttpClient)
-  {
-    this.loginCounter = parseInt(sessionStorage.getItem('auth') as string) || 0;
-  }
+    constructor(private httpClient: HttpClient) { }
 
-  loginCounter = 0;
+    login(loginOrEmail: string, password: string): Observable<any> {
+        return this.httpClient.post('/api/Users/Login', { loginOrEmail, password })
+    };
 
-  public login(login: string, password: string): Observable<any[]> {
-    this.loginCounter++;
-    sessionStorage.setItem('auth', this.loginCounter.toString());
-    return of([true, this.loginCounter]);
-  }
-
-  public isAuthenticated() {
-    return this.loginCounter > 0;
-  }
+    public isAuthenticated() {
+        return '';
+    }
 }

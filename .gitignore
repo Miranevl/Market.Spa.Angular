@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+proxy.conf.json
 
 # Node
 /node_modules
