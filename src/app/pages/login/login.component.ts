@@ -20,7 +20,7 @@ export class LoginComponent {
       responese => {
         alert('Вы успешно вошли!')
         window.localStorage.setItem('token', responese.data.token);
-        this.router.navigate(['/app']);
+        this.router.navigate(['/app'])
       },
       error => {
         alert(error.error.details);
