@@ -1,6 +1,6 @@
-import { Injectable, ViewChildren } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -9,10 +9,23 @@ export class AuthService {
     constructor(private httpClient: HttpClient) { }
 
     login(loginOrEmail: string, password: string): Observable<any> {
-        return this.httpClient.post('/api/Users/Login', { loginOrEmail, password })
+        return this.httpClient.post('/api/Users/Login', { loginOrEmail, password });
     };
 
-    public isAuthenticated() {
-        return '';
+    registration(login: string, password: string, email: string): Observable<any> {
+        return this.httpClient.post('/api/Users/Create', { login, password, email });
+    }
+
+    auth(refreshToken: string): Observable<any> {
+        return this.httpClient.get(`/api/Users/LoginByRefreshToken?refreshToken=${refreshToken}`)
+    }
+
+    public isAuthenticated(): Observable<boolean> {
+        const token = window.localStorage.getItem('token');
+        if (token) {
+            return of(true);
+        } else {
+            return of(false);
+        }
     }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -6,21 +7,23 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   loginForm: any = {
-    login: '',
+    loginOrEmail: '',
     password: '',
   };
 
   onLoginSubmit() {
-    const { login, password } = this.loginForm;
-    this.authService.login(login, password).subscribe(
+    const { loginOrEmail, password } = this.loginForm;
+    this.authService.login(loginOrEmail, password).subscribe(
       responese => {
-        console.log('вы успешно вошли');
+        alert('Вы успешно вошли!')
+        window.localStorage.setItem('token', responese.data.token);
+        this.router.navigate(['/app']);
       },
       error => {
-        console.log('Миша все хуйня')
+        alert(error.error.details);
       }
     )
   }
