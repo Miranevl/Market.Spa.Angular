@@ -1,0 +1,14 @@
+<main class="w-full">
+  <div class="h-4/5 bg-slate-50 rounded-[10px] mt-4 mr-5 border">
+    <div class="flex items-center justify-center">
+      <ag-grid-angular
+        class="ag-theme-alpine h-screen w-full text-center"
+        [columnDefs]="columnDefs"
+        [rowData]="rowData"
+      >
+      </ag-grid-angular>
+
+      <!-- <button (click)="addTracker()">Добавить трекер</button> -->
+    </div>
+  </div>
+</main>

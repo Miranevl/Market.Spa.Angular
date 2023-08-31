@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, retry } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -20,10 +20,10 @@ export class AuthService {
         return this.httpClient.get(`/api/Users/LoginByRefreshToken?refreshToken=${refreshToken}`)
     }
 
-    public isAuthenticated(): Observable<boolean> {
+    public isAuthenticated(): Observable<any> {
         const token = window.localStorage.getItem('token');
         if (token) {
-            return of(true);
+            return of(token);
         } else {
             return of(false);
         }
