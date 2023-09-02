@@ -1,14 +1,17 @@
 <main class="w-full">
   <div class="h-4/5 bg-slate-50 rounded-[10px] mt-4 mr-5 border">
-    <div class="flex items-center justify-center">
-      <ag-grid-angular
-        class="ag-theme-alpine h-screen w-full text-center"
-        [columnDefs]="columnDefs"
-        [rowData]="rowData"
-      >
-      </ag-grid-angular>
+    <div class="flex flex-col items-center justify-center">
+      <button
+        class="bg-white text-sm text-blue-600 transition ease-in-out delay-75 w-full h-[30px] hover:bg-blue-600 hover:text-white"
+        (click)="toggleInputBlock()">
+        Добавить трекинг
+      </button>
+      <div *ngIf="showInputBlock" (close)="toggleInputBlock() ">
+        <app-add-tracker (close)="toggleInputBlock()" (trackerAdded)="onTrackerAdded() " />
+      </div>
+      <ag-grid-angular class="ag-theme-alpine h-screen w-full text-center" [columnDefs]="columnDefs"
+        [rowData]="rowData" />
 
-      <!-- <button (click)="addTracker()">Добавить трекер</button> -->
     </div>
   </div>
 </main>

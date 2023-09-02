@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { ICellRendererAngularComp } from "ag-grid-angular";
+import { TrackerService } from "src/app/services/tracker/tracker.service";
 
 @Component({
     selector: 'update-tracker',
@@ -8,21 +9,32 @@ import { ICellRendererAngularComp } from "ag-grid-angular";
 
 
 export class UpdateTracker implements ICellRendererAngularComp {
-    private params: any;
+    constructor(private TrackerService: TrackerService) { }
+    @Output() onDelete = new EventEmitter<void>();
+
+    public params: any;
 
     agInit(params: any): void {
         this.params = params;
     }
 
     refresh(params: any): boolean {
-        return false;
+        return true;
     }
 
     handleUpdateClick(): void {
         alert('Я обновился')
     }
 
-    handleDeleteClick(): void {
-        alert('я удалился')
+    handleDeleteClick(id: number): void {
+        this.TrackerService.deleteTracker(id).subscribe(
+            response => {
+                alert('я удалился!');
+                window.location.reload(); // костыль
+            },
+            error => {
+                alert(error);
+            }
+        )
     }
 }

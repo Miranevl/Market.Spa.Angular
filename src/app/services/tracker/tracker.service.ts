@@ -17,4 +17,11 @@ export class TrackerService {
     return this.httpClient.post('/api/Tracking/Create', { title, marketplaceId });
   }
 
+  deleteTracker(trackingId: number) {
+    return this.httpClient.post(`/api/Tracking/Remove/${trackingId}`, {});
+  }
+
+  updateTracker(trackingId: number, title: string) {
+    return this.httpClient.post('/api/Tracking/Update', { trackingId, title });
+  }
 }
