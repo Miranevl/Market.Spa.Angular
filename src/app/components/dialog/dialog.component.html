@@ -1,0 +1,15 @@
+<div class="flex flex-col bg-white w-[50%] p-10 shadow shadow-black rounded-[10px]">
+    <div class="flex items-center border-b-slate-400 h-[70px]  text-gray-700 text-2xl pl-7 pr-7 font-bold">
+        Пожалуйста подтвердите действие
+    </div>
+    <div class="grow p-7 text-lg">
+        Вы уверены, что хотите выполнить это действие?
+    </div>
+
+    <div class="flex justify-end h-[50px] gap-5 p-5">
+        <button class="bg-white border-2 w-20 h-8 border-blue-600 text-blue-600"
+            (click)="GeneralService.showDialog = false">Нет</button>
+        <button class="w-20 h-8 bg-blue-600 text-white cursor-pointer transition ease-in-out delay-75 hover:bg-red-700"
+            (click)="GeneralService.handleClickOnYes()">Да</button>
+    </div>
+</div>

@@ -6,11 +6,11 @@ import { Header } from 'src/app/components/header/header.component';
 import { Content } from 'src/app/components/content/content.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { MonitoringPositionComponent } from '../monitoring-position/monitoring-position.component';
-import { AddTrackerComponent } from '../monitoring-position/add-tracker/add-tracker.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UpdateTracker } from '../monitoring-position/update-tracker.component';
-import { UpdateTrackerBlockComponent } from '../monitoring-position/update-tracker-block/update-tracker-block.component';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { AddedAndUpdateTrackingBlockComponent } from 'src/app/components/added-and-update-tracking-block/added-and-update-tracking-block.component';
 
 const appRoutes: Routes = [
   {
@@ -25,7 +25,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [UserSpaceComponent, Navbar, Header, Content, MonitoringPositionComponent, AddTrackerComponent, UpdateTracker, UpdateTrackerBlockComponent],
+  declarations: [UserSpaceComponent, Navbar, Header, Content, MonitoringPositionComponent, UpdateTracker, DialogComponent, AddedAndUpdateTrackingBlockComponent],
   imports: [RouterModule.forChild(appRoutes), AgGridModule, CommonModule, FormsModule],
   providers: [],
 })

@@ -1,9 +1,9 @@
-<div
-  class="flex flex-col items-center justify-center lg:items-start lg:justify-center lg:flex-row"
->
+<div class="flex flex-col items-center justify-center lg:items-start lg:justify-center lg:flex-row">
   <main-navbar-app class="lg:w-1/4" />
   <div class="flex-1 h-screen ml-5 lg:ml-0">
     <main-header-app />
     <router-outlet />
   </div>
 </div>
+<app-dialog *ngIf="GeneralService.showDialog" />
+<app-added-and-update-tracking-block *ngIf="AddAndUpdateService.showBlock" />

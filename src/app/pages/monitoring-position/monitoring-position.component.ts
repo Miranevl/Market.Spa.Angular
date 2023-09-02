@@ -3,16 +3,16 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 import { Observable } from 'rxjs';
 import { TrackerService } from 'src/app/services/tracker/tracker.service';
 import { UpdateTracker } from './update-tracker.component';
+import { AddAndUpdateService } from 'src/app/services/tracker/add-and-update.service';
 
 @Component({
   selector: 'app-monitoring-position',
   templateUrl: './monitoring-position.component.html',
 })
 
-
 export class MonitoringPositionComponent {
 
-  constructor(private TrackerService: TrackerService) { }
+  constructor(private TrackerService: TrackerService, public AddAndUpdateService: AddAndUpdateService) { }
   marketPlace: any = {
     1: 'Wildberries',
     2: 'Ozon',
@@ -41,15 +41,16 @@ export class MonitoringPositionComponent {
 
   ngOnInit(): void {
     this.loadTrackings();
+
+    this.AddAndUpdateService.trackerAdded.subscribe(() => {
+      this.loadTrackings();
+    });
   }
 
   loadTrackings() {
     this.TrackerService.getTrackings().subscribe(
       (response: any) => {
         this.rowData = response.data;
-        console.log('Обновленные данные:', this.rowData);
-
-
       },
       (error) => {
         console.log(error);
