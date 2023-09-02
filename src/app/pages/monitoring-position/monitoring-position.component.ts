@@ -33,7 +33,7 @@ export class MonitoringPositionComponent {
       },
     },
     {
-      field: 'actions', headerName: 'Действия', cellRenderer: UpdateTracker
+      field: 'actions', headerName: 'Действия', cellRenderer: UpdateTracker,
     }
   ];
 
