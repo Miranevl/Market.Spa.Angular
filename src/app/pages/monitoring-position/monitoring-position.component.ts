@@ -54,7 +54,6 @@ export class MonitoringPositionComponent {
     this.TrackerService.getTrackings().subscribe(
       (response: any) => {
         this.rowData = response.data;
-        this.TrackerService.data = response.data;
       },
       (error) => {
         console.log(error);

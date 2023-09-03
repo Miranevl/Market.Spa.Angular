@@ -24,4 +24,8 @@ export class TrackerService {
   updateTracker(trackingId: number, title: string) {
     return this.httpClient.post('/api/Tracking/Update', { trackingId, title });
   }
+
+  getTrackerId(trackingId: number) {
+    return this.httpClient.get(`/api/Tracking/${trackingId}`);
+  }
 }

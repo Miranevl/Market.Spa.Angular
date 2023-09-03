@@ -5,15 +5,18 @@ import { TrackerService } from 'src/app/services/tracker/tracker.service';
 @Component({
   selector: 'app-added-and-update-tracking-block',
   templateUrl: './added-and-update-tracking-block.component.html',
-  styleUrls: ['./added-and-update-tracking-block.component.scss']
 })
 export class AddedAndUpdateTrackingBlockComponent implements OnInit {
-  constructor(private AddAndUpdateService: AddAndUpdateService, private TrackerService: TrackerService) { }
+  constructor(public AddAndUpdateService: AddAndUpdateService, private TrackerService: TrackerService) { }
 
   TrackerForm: any = {
     nameTracker: '',
     marketplaceId: 1,
   }
+
+  TrackerFromUpdate: any = {
+    nameTracker: ''
+  };
 
   ngOnInit(): void {
 
@@ -24,9 +27,9 @@ export class AddedAndUpdateTrackingBlockComponent implements OnInit {
     this.TrackerService.addTracker(nameTracker, marketplaceId).subscribe(
       response => {
         alert('Новый трекер успешно добавлен!');
-        this.AddAndUpdateService.showBlock = false;
+        this.AddAndUpdateService.showBlock1 = false;
         // Вызов события после успешного добавления трекинга
-        this.AddAndUpdateService.triggerTrackerAdded();
+        this.AddAndUpdateService.triggerTrackerUpdated();
       },
       error => {
         console.log(error);
