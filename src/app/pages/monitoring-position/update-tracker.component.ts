@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { GeneralService } from 'src/app/services/general.service';
+import { AddAndUpdateService } from 'src/app/services/tracker/add-and-update.service';
 import { TrackerService } from 'src/app/services/tracker/tracker.service';
 
 @Component({
@@ -9,9 +10,8 @@ import { TrackerService } from 'src/app/services/tracker/tracker.service';
     templateUrl: 'update-tracker.component.html',
 })
 export class UpdateTracker implements ICellRendererAngularComp {
-    constructor(private TrackerService: TrackerService, public GeneralService: GeneralService) { }
+    constructor(private TrackerService: TrackerService, public GeneralService: GeneralService, public AddAndUpdateService: AddAndUpdateService) { }
     @Output() onDelete = new EventEmitter<void>();
-    @Output() onUpdate = new EventEmitter<void>();
 
 
     public params!: ICellRendererParams;
@@ -25,8 +25,16 @@ export class UpdateTracker implements ICellRendererAngularComp {
         return true;
     }
 
-    handleUpdateClick(): void {
-        this.onUpdate.emit();
+    handleUpdateClick(id: number): void {
+        this.AddAndUpdateService.setCallback(() => {
+            this.TrackerService.updateTracker(id, this.AddAndUpdateService.saveTitle).subscribe(
+                (response) => {
+                    this.AddAndUpdateService.showBlock2 = false;
+                    this.AddAndUpdateService.triggerTrackerUpdated();
+                }
+            )
+        })
+        this.AddAndUpdateService.showBlock2 = true;
     }
 
     handleDeleteClick(id: number): void {

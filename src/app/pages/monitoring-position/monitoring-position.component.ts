@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ColDef, GridOptions } from 'ag-grid-community';
-import { Observable } from 'rxjs';
+import { ColDef } from 'ag-grid-community';
 import { TrackerService } from 'src/app/services/tracker/tracker.service';
 import { UpdateTracker } from './update-tracker.component';
 import { AddAndUpdateService } from 'src/app/services/tracker/add-and-update.service';
+import { TitleLinkComponent } from './titleLink/title-link.component';
 
 @Component({
   selector: 'app-monitoring-position',
@@ -18,10 +18,13 @@ export class MonitoringPositionComponent {
     2: 'Ozon',
   }
 
-  showInputBlock = false;
+  showInputBlock = true;
 
   columnDefs: ColDef[] = [
-    { field: 'title', headerName: 'Наименование трекинга', flex: 1 },
+    {
+      field: 'title', headerName: 'Наименование трекинга', flex: 1, cellRenderer: TitleLinkComponent,
+      cellRendererParams: (params: any) => ({ data: params.data })
+    },
     {
       field: 'marketplaceId', headerName: 'Маркетплейс', cellRenderer: (params: any) => {
         const marketplaceId = params.value;
@@ -51,6 +54,7 @@ export class MonitoringPositionComponent {
     this.TrackerService.getTrackings().subscribe(
       (response: any) => {
         this.rowData = response.data;
+        this.TrackerService.data = response.data;
       },
       (error) => {
         console.log(error);

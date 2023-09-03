@@ -1,6 +1,6 @@
 <div class="flex items-center justify-center">
-  <img src="/assets/icons/pencil-square.svg" alt="update" (click)="handleUpdateClick()" style="width: 25px"
-    class="change-color mx-3 mt-2 cursor-pointer" />
+  <img src="/assets/icons/pencil-square.svg" alt="update" (click)="handleUpdateClick(params.data.id)"
+    style="width: 25px" class="change-color mx-3 mt-2 cursor-pointer" />
   <img src="/assets/icons/x-circle-fill.svg" alt="delete" (click)="handleDeleteClick(params.data.id)"
     style="width: 25px" class="change-color mt-2 cursor-pointer" />
 </div>
