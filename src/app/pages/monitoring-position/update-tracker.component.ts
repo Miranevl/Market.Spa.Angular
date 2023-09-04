@@ -8,6 +8,7 @@ import { TrackerService } from 'src/app/services/tracker/tracker.service';
 @Component({
     selector: 'update-tracker',
     templateUrl: 'update-tracker.component.html',
+    styleUrls: ['update-tracker.component.scss']
 })
 export class UpdateTracker implements ICellRendererAngularComp {
     constructor(private TrackerService: TrackerService, public GeneralService: GeneralService, public AddAndUpdateService: AddAndUpdateService) { }
@@ -27,10 +28,11 @@ export class UpdateTracker implements ICellRendererAngularComp {
 
     handleUpdateClick(id: number): void {
         this.AddAndUpdateService.setCallback(() => {
-            this.TrackerService.updateTracker(id, this.AddAndUpdateService.saveTitle).subscribe(
+            this.TrackerService.updateTracker(id, this.AddAndUpdateService.TrackerFromUpdate.nameTrackerUpdate).subscribe(
                 (response) => {
                     this.AddAndUpdateService.showBlock2 = false;
                     this.AddAndUpdateService.triggerTrackerUpdated();
+                    this.AddAndUpdateService.TrackerFromUpdate.nameTrackerUpdate = '';
                 }
             )
         })
@@ -44,6 +46,8 @@ export class UpdateTracker implements ICellRendererAngularComp {
                     this.params.api.applyTransaction({
                         remove: [this.params.data],
                     });
+                    this.AddAndUpdateService.triggerTrackerUpdated();
+
                     this.GeneralService.showDialog = false;
                 },
                 (error) => {

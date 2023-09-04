@@ -19,6 +19,7 @@ export class MonitoringPositionComponent {
   }
 
   showInputBlock = true;
+  trackersExist: boolean = false;
 
   columnDefs: ColDef[] = [
     {
@@ -54,6 +55,8 @@ export class MonitoringPositionComponent {
     this.TrackerService.getTrackings().subscribe(
       (response: any) => {
         this.rowData = response.data;
+        this.trackersExist = this.rowData.length > 0; // Проверяем наличие трекеров в массиве
+
       },
       (error) => {
         console.log(error);
@@ -69,7 +72,4 @@ export class MonitoringPositionComponent {
     this.loadTrackings();
   }
 
-  onTrackerDeleted(): void {
-    this.loadTrackings();
-  }
 }

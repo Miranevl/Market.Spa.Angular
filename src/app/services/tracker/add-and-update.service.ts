@@ -9,7 +9,10 @@ export class AddAndUpdateService {
   showBlock2 = false;
   callbackFunc: any = null;
   CompliteOrNot = false;
-  saveTitle = '';
+
+  TrackerFromUpdate: any = {
+    nameTrackerUpdate: '',
+  };
 
   private trackerUpdatedSubject = new BehaviorSubject<boolean>(false);
   trackerAdded = this.trackerUpdatedSubject.asObservable();
@@ -20,10 +23,10 @@ export class AddAndUpdateService {
   }
 
   handleClickOnYes(title: string) {
-    this.saveTitle = title;
-    this.CompliteOrNot = !this.CompliteOrNot;
+    this.CompliteOrNot = true;
     if (this.CompliteOrNot && this.callbackFunc) {
       this.callbackFunc();
+
     }
   }
 

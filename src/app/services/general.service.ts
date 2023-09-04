@@ -11,7 +11,7 @@ export class GeneralService {
   constructor() { }
 
   handleClickOnYes() {
-    this.CompliteOrNot = !this.CompliteOrNot;
+    this.CompliteOrNot = true;
     if (this.CompliteOrNot && this.callbackFunc) {
       this.callbackFunc();
     }
