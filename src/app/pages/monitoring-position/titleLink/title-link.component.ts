@@ -20,7 +20,7 @@ export class TitleLinkComponent {
     handleClick(trackerId: number) {
         this.TrackerService.getTrackerId(trackerId).subscribe(
             response => {
-                this.router.navigate([`/monitoring-position/${trackerId}`])
+                this.router.navigate([`app/tracker-info/${this.title}/${trackerId}`]);
             },
             error => {
                 alert(error);

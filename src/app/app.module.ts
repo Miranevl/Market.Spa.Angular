@@ -10,6 +10,7 @@ import { AuthGuard } from './services/auth.guard';
 import { AuthComponent } from './pages/auth/auth.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: LoginComponent },
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MonacoEditorModule.forRoot(),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
