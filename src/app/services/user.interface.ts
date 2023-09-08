@@ -3,3 +3,8 @@ export interface UserRegistration {
     email: string,
     password: string,
 }
+
+export interface TrackingKeywords {
+    id: number,
+    text: string,
+}

@@ -14,6 +14,7 @@ import { AddedAndUpdateTrackingBlockComponent } from 'src/app/components/added-a
 import { TitleLinkComponent } from '../monitoring-position/titleLink/title-link.component';
 import { TrackerInfoComponent } from '../tracker-info/tracker-info.component';
 import { KeywordsBlockComponent } from 'src/app/components/keywords-block/keywords-block.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 const appRoutes: Routes = [
   {
@@ -24,13 +25,12 @@ const appRoutes: Routes = [
       { path: 'tracker-info/:title/:id', component: TrackerInfoComponent }
     ]
   },
-
-
 ];
+
 
 @NgModule({
   declarations: [UserSpaceComponent, Navbar, Header, Content, MonitoringPositionComponent, UpdateTracker, DialogComponent, AddedAndUpdateTrackingBlockComponent, TitleLinkComponent, TrackerInfoComponent, KeywordsBlockComponent],
-  imports: [RouterModule.forChild(appRoutes), AgGridModule, CommonModule, FormsModule],
+  imports: [RouterModule.forChild(appRoutes), AgGridModule, CommonModule, FormsModule, MonacoEditorModule.forRoot()],
   providers: [],
 })
 export class UserSpaceModule { }

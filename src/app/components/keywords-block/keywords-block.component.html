@@ -4,24 +4,27 @@
         <p class='bg-slate-50 mt-2'>Слова или словосочетания в поисковых запросах, <br /> по которым будут
             показываться ваши объявления.</p>
     </div>
-    <div class="flex items-center justify-around mt-10  bg-slate-100 ">
-        <div class='flex flex-col'>
+    <div class="flex justify-around  mt-10  bg-slate-100  h-[550px] rounded-md">
+        <div class='flex flex-col '>
             <span class='text-xl mb-2 font-semibold mt-2'>Добавить в ручную</span>
-            <ngx-monaco-editor [(ngModel)]="code"></ngx-monaco-editor>
-
+            <ngx-monaco-editor style="height: 400px ; width: 450px; text-align: start;" [options]="editorOptions"
+                [(ngModel)]="code"></ngx-monaco-editor>
             <div class='flex flex-col items-center mt-2 gap-2'>
-                <button
+                <button (click)="diffTrackerKeywords()"
                     class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Сохранить</button>
-                <button
+                <button (click)="deleteAllTrackers()"
                     class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Удалить
                     все</button>
             </div>
         </div>
-        <div class='flex flex-col items-center justify-center gap-1.5'>
+        <div class='flex flex-col items-center justify-center'>
             <span class='text-xl font-semibold mt-2'>Подбор ключевых слов:</span>
-            <input class="w-full bg-slate-300" type="text" placeholder='Введите ключевое слово' />
-            <div>
-                <span>тут список ключевых слов</span>
+            <input class="w-full bg-slate-300" type="text" placeholder='Введите ключевое слово' [(ngModel)]="keyword"
+                (input)="suggestKeyword(keyword)" />
+            <div class="p-2">
+                <ul>
+                    <li></li>
+                </ul>
             </div>
             <button
                 class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Добавить
