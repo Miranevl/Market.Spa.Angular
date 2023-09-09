@@ -55,7 +55,6 @@ export class KeywordsBlockComponent {
         response => {
           this.data = response;
           this.code = this.data.data.map((item: any) => item.text).join('\n');
-          console.log(this.code);
         },
         error => {
           console.log(error);
