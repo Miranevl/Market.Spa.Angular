@@ -16,6 +16,7 @@ import { TrackerInfoComponent } from '../tracker-info/tracker-info.component';
 import { KeywordsBlockComponent } from 'src/app/components/keywords-block/keywords-block.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ArticlesBlockComponent } from 'src/app/components/articles-block/articles-block.component';
+import { PwzBlockComponent } from 'src/app/components/pwz-block/pwz-block.component';
 
 const appRoutes: Routes = [
   {
@@ -30,7 +31,7 @@ const appRoutes: Routes = [
 
 
 @NgModule({
-  declarations: [UserSpaceComponent, Navbar, Header, Content, MonitoringPositionComponent, UpdateTracker, DialogComponent, AddedAndUpdateTrackingBlockComponent, TitleLinkComponent, TrackerInfoComponent, KeywordsBlockComponent, ArticlesBlockComponent],
+  declarations: [UserSpaceComponent, Navbar, Header, Content, MonitoringPositionComponent, UpdateTracker, DialogComponent, AddedAndUpdateTrackingBlockComponent, TitleLinkComponent, TrackerInfoComponent, KeywordsBlockComponent, ArticlesBlockComponent, PwzBlockComponent],
   imports: [RouterModule.forChild(appRoutes), AgGridModule, CommonModule, FormsModule, MonacoEditorModule.forRoot()],
   providers: [],
 })
