@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { CSP_NONCE, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 import { TrackingKeywordsService } from 'src/app/services/tracker/TrackingKeywords/tracking-keywords.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class KeywordsBlockComponent {
   code: string = '';
   data: any = {}
   keyword: string = '';
-  dataKeywords: any = {};
+  dataKeywords: any = [{}];
+  private keywordInput$ = new Subject<string>();
 
   constructor(private TrackingKeywordsService: TrackingKeywordsService, private route: ActivatedRoute) { }
   ngOnInit(): void {
@@ -28,6 +30,23 @@ export class KeywordsBlockComponent {
     if (this.id !== undefined) {
       this.refreshTrackingKeywords();
     }
+
+    this.keywordInput$
+      .pipe(
+        debounceTime(500), // Задержка 500 мс
+        distinctUntilChanged(), // Игнорировать одинаковые значения
+        filter(keyword => keyword !== ''), // Фильтрация пустой строки
+        switchMap(keyword => this.TrackingKeywordsService.suggestKeywords(keyword))
+      )
+      .subscribe(
+        response => {
+          this.dataKeywords = response;
+          console.log(this.dataKeywords.data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   refreshTrackingKeywords() {
@@ -44,6 +63,20 @@ export class KeywordsBlockComponent {
       )
     }
   }
+
+  addedOneTrackingKeyword(keyword: string[]) {
+    if (this.id) {
+      this.TrackingKeywordsService.addTrackingKeywords(this.id, keyword).subscribe(
+        () => {
+          alert('слово добавлено');
+          this.refreshTrackingKeywords();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  };
 
   deleteAllTrackers() {
     if (this.id) {
@@ -110,15 +143,22 @@ export class KeywordsBlockComponent {
   }
 
   suggestKeyword(keyword: string) {
-    this.TrackingKeywordsService.suggestKeywords(keyword).subscribe(
-      response => {
-        this.dataKeywords = response;
-        console.log(this.dataKeywords);
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    this.keywordInput$.next(keyword);
+  }
+
+  addedAllKeywords(data: any) {
+    const dataKeywords = data.map((item: any) => item.text);
+    if (this.id) {
+      this.TrackingKeywordsService.addTrackingKeywords(this.id, dataKeywords).subscribe(
+        () => {
+          alert('Слова были успешно добавлены'),
+            this.refreshTrackingKeywords();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   cleanUpText(keyword: string): string {
