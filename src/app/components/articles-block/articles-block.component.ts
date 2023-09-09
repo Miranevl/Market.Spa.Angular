@@ -46,12 +46,12 @@ export class ArticlesBlockComponent {
     if (this.id) {
       this.trackingArticlesService.getTrackingArticles(this.id).subscribe(
         () => {
-          const originalArticles = new Set(this.data.data.map((item: any) => item.text));
-          const changedKeys = new Set(this.code.split('\n').map((keyword) => keyword.trim().toLowerCase()));
-          const addedArticles = [...changedKeys].filter((keyword) => !originalArticles.has(keyword));
+          const originalArticles = new Set(this.data.data.map((num: any) => num));
+          const changedKeys = new Set(this.code.split('\n').map((num) => num.trim()));
+          const addedArticles = [...changedKeys].filter((num) => !originalArticles.has(num));
           const removedArticles = this.data.data
-            .filter((keyword: any) => !changedKeys.has(keyword.text.toLowerCase()))
-            .map((keyword: any) => keyword.id);
+            .filter((num: any) => !changedKeys.has(num.text))
+            .map((num: any) => num.id);
           this.handleChanges(addedArticles, removedArticles);
         },
         error => {
@@ -78,15 +78,14 @@ export class ArticlesBlockComponent {
       if (addedArticles.length > 0) {
         const cleanedArticles = addedArticles
           .map((article) => this.cleanUpArticles(article))
-          .filter((keyword) => keyword.trim() !== '');
-        console.log(cleanedArticles);
+          .filter((article) => article.trim() !== '');
         this.trackingArticlesService.addTrackingArticles(this.id, cleanedArticles).subscribe(
-          () => {
+          (response) => {
             alert('новые артикулы добавлены');
             this.refreshTrackingArticles();
           },
           error => {
-            console.log(error);
+            console.log(error, 'тут ошибкуа');
           }
         );
       }
@@ -120,7 +119,5 @@ export class ArticlesBlockComponent {
       )
     }
   };
-
-
 
 }

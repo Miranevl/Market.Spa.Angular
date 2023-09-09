@@ -12,16 +12,16 @@ export class TrackingArticlesService {
     return this.httpClient.get(`/api/TrackingArticles/${trackingId}`);
   }
 
-  clearTrackingArticles(trackerId: number) {
-    return this.httpClient.post('/api/TrackingArticles/ClearAll', { trackerId })
+  clearTrackingArticles(trackingId: number) {
+    return this.httpClient.post('/api/TrackingArticles/ClearAll', { trackingId })
   }
 
-  addTrackingArticles(trackerId: number, articles: string[]) {
-    return this.httpClient.post('/api/TrackingArticles/Add', { trackerId, articles });
+  addTrackingArticles(trackingId: number, articles: string[]) {
+    return this.httpClient.post('/api/TrackingArticles/Add', { trackingId, articles });
   }
 
-  removeTrackingArticles(trackerId: number, articleIds: number[]) {
-    return this.httpClient.post('/api/TrackingArticles/Remove', { trackerId, articleIds });
+  removeTrackingArticles(trackingId: number, articleIds: number[]) {
+    return this.httpClient.post('/api/TrackingArticles/Remove', { trackingId, articleIds });
   }
 
 }
