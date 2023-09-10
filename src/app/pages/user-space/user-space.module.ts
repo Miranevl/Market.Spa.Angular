@@ -20,6 +20,7 @@ import { PwzBlockComponent } from 'src/app/components/pwz-block/pwz-block.compon
 import { TreeComponent } from 'src/app/components/pwz-block/tree/tree.component';
 import { TreeNodeComponent } from 'src/app/components/pwz-block/tree/tree-node/tree-node.component';
 import { TreeBranchComponent } from 'src/app/components/pwz-block/tree/tree-branch/tree-branch.component';
+import { TreeCheckboxComponent } from 'src/app/components/pwz-block/tree/tree-checkbox/tree-checkbox.component';
 
 const appRoutes: Routes = [
   {
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
     PwzBlockComponent,
     TreeComponent,
     TreeNodeComponent,
-    TreeBranchComponent
+    TreeBranchComponent,
+    TreeCheckboxComponent
   ],
   imports: [RouterModule.forChild(appRoutes), AgGridModule, CommonModule, FormsModule, MonacoEditorModule.forRoot()],
   providers: [],

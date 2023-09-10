@@ -12,6 +12,10 @@ export class TrackingPwzService {
     return this.httpClient.get(`/api/Pwz/groups/tree/${marketplaceId}`);
   };
 
+  getPwzDetails(pwzGroupId: number) {
+    return this.httpClient.get(`/api/Pwz/details/${pwzGroupId}`)
+  }
+
   getMyPwz(trackingId: number) {
     return this.httpClient.get(`/api/TrackingPwzGroups/${trackingId}`);
   };
@@ -27,5 +31,7 @@ export class TrackingPwzService {
   addRegionInMyPwz(trackingId: number, pwzGroupsIds: number[]) {
     return this.httpClient.post('/api/TrackingPwzGroups/add', { trackingId, pwzGroupsIds });
   };
+
+
 
 }
