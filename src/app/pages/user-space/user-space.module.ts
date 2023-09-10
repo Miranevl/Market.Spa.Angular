@@ -17,6 +17,9 @@ import { KeywordsBlockComponent } from 'src/app/components/keywords-block/keywor
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ArticlesBlockComponent } from 'src/app/components/articles-block/articles-block.component';
 import { PwzBlockComponent } from 'src/app/components/pwz-block/pwz-block.component';
+import { TreeComponent } from 'src/app/components/pwz-block/tree/tree.component';
+import { TreeNodeComponent } from 'src/app/components/pwz-block/tree/tree-node/tree-node.component';
+import { TreeBranchComponent } from 'src/app/components/pwz-block/tree/tree-branch/tree-branch.component';
 
 const appRoutes: Routes = [
   {
@@ -31,7 +34,24 @@ const appRoutes: Routes = [
 
 
 @NgModule({
-  declarations: [UserSpaceComponent, Navbar, Header, Content, MonitoringPositionComponent, UpdateTracker, DialogComponent, AddedAndUpdateTrackingBlockComponent, TitleLinkComponent, TrackerInfoComponent, KeywordsBlockComponent, ArticlesBlockComponent, PwzBlockComponent],
+  declarations: [
+    UserSpaceComponent,
+    Navbar,
+    Header,
+    Content,
+    MonitoringPositionComponent,
+    UpdateTracker,
+    DialogComponent,
+    AddedAndUpdateTrackingBlockComponent,
+    TitleLinkComponent,
+    TrackerInfoComponent,
+    KeywordsBlockComponent,
+    ArticlesBlockComponent,
+    PwzBlockComponent,
+    TreeComponent,
+    TreeNodeComponent,
+    TreeBranchComponent
+  ],
   imports: [RouterModule.forChild(appRoutes), AgGridModule, CommonModule, FormsModule, MonacoEditorModule.forRoot()],
   providers: [],
 })
