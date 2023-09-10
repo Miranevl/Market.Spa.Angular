@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-tree-node',
@@ -8,11 +8,34 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class TreeNodeComponent {
   @Input() node: any;
   isExpanded?: boolean;
+  state: number = 0;
+
   constructor() { }
 
+  ngOnInit(): void {
+    this.node.state = 0;
+  }
 
   toggleExpansion() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  toggleCheckbox(node: any) {
+    if (node.state === 0) {
+      node.state = 1;
+      this.toggleChildrenCheckbox(node);
+    } else {
+      node.state = 0;
+    }
+  };
+
+  toggleChildrenCheckbox(node: any) {
+    if (node?.children) {
+      node.children.forEach((child: any) => {
+        child.state = 1;
+        this.toggleChildrenCheckbox(child);
+      });
+    }
   }
 
 }
