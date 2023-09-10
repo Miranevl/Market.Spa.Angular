@@ -7,6 +7,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class TreeNodeComponent {
   @Input() node: any;
+  isExpanded?: boolean;
   constructor() { }
+
+
+  toggleExpansion() {
+    this.isExpanded = !this.isExpanded;
+  }
 
 }

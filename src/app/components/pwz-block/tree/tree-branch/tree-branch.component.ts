@@ -7,11 +7,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class TreeBranchComponent {
   @Input() branch: any;
-  isExpanded: boolean = false;
 
-
-  toggleExpansion() {
-    this.isExpanded = !this.isExpanded;
-  }
 
 }

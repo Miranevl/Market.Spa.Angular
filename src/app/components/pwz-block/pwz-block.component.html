@@ -2,10 +2,10 @@
     <div class='flex flex-col text-center'>
         <h3 class='bg-slate-50 text-2xl font-semibold mt-3'>Пункты выдачи</h3>
         <p class='bg-slate-50 mt-2'>Выбор регионов для показа объявлений</p>
-        <div class=" flex flex-col mt-5 p-5 rounded-[4px] w-full bg-slate-200">
-            <div class="flex items-center">
-                <div class="">
-                    <p class="text-2xl font-semibold ">Выбор пункта выдачи</p>
+        <div class=" flex mt-5 p-5 rounded-[4px] w-full bg-slate-200">
+            <div class="flex w-full justify-center gap-5">
+                <div class="w-6/12">
+                    <span class="text-2xl font-semibold">Выбор пункта выдачи</span>
                     <app-tree />
                     <div class="flex flex-col items-center gap-2 mt-3">
                         <button
@@ -16,13 +16,18 @@
                             изменения</button>
                     </div>
                 </div>
-                <div class="flex flex-1 flex-col items-center">
-                    <span class="text-2xl font-semibold text-center mt-3">Адреса пунктов выдачи</span>
-                    <div class="flex flex-col mx-5">
-                        <span>тут адреса</span>
+                <div class="w-6/12">
+                    <span class="text-2xl font-semibold ">Адреса пунктов выдачи</span>
+                    <div class="flex flex-col items-center">
+                        <div class="flex flex-col mx-5">
+                            <span>тут адреса</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
+
     </div>
+
+</div>

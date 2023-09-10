@@ -1,1 +1,8 @@
-<p>{{node.title}}</p>
+<div class="flex gap-2">
+    <button (click)="toggleExpansion()" [class.opened]="isExpanded" class="collapse-button"
+        *ngIf="node.children && node.children.length > 0"></button>
+    <p>{{node.title}}</p>
+</div>
+<div *ngIf="isExpanded" class="ml-5">
+    <app-tree-node *ngFor="let child of node.children" [node]="child"></app-tree-node>
+</div>
