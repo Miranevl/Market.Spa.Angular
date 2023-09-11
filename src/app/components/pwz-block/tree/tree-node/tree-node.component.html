@@ -5,5 +5,5 @@
     <p>{{node.title}}</p>
 </div>
 <div *ngIf="isExpanded" class="ml-5">
-    <app-tree-node *ngFor="let child of node.children" [node]="child"></app-tree-node>
+    <app-tree-node *ngFor="let child of node.children" [node]="child" [parent]="this.node"></app-tree-node>
 </div>
