@@ -20,40 +20,37 @@ export class TreeNodeComponent {
 
   toggleCheckbox(node: any) {
     if (node.state === 0) {
-      this.checkedParent(node);
-      node.state = 1;
-      this.toggleChildrenCheckbox(node);
-
+      node.state = 1; // Помечаем текущий узел как выбранный (или частично выбранный)
+      this.toggleChildrenCheckbox(node, 1); // Выбираем всех детей
+      this.updateParentState(node.parent);
     } else {
-      this.checkedParent(node);
-
-      node.state = 0;
-      this.toggleChildrenCheckbox(node);
-
+      node.state = 0; // Снимаем выбор с текущего узла
+      this.toggleChildrenCheckbox(node, 0); // Снимаем выбор со всех детей
+      this.updateParentState(node.parent);
     }
-  };
+  }
 
-  toggleChildrenCheckbox(node: any) {
-    if (node?.children) {
+  updateParentState(parent: any) {
+    if (parent) {
+      const childStates = parent.children.map((child: any) => child.state);
+      if (childStates.every((state: number) => state === 1)) {
+        parent.state = 1; // Если все дети выбраны, родитель выбран
+      } else if (childStates.some((state: number) => state === 1 || state === 2)) {
+        parent.state = 2; // Если хотя бы один ребенок выбран или частично выбран, родитель частично выбран
+      } else {
+        parent.state = 0; // В противном случае, ни один ребенок не выбран
+      }
+      this.updateParentState(parent.parent);
+    }
+  }
+
+  toggleChildrenCheckbox(node: any, state: number) {
+    if (node.children) {
       node.children.forEach((child: any) => {
-        if (child.state === 0) {
-          child.state = 1;
-          this.toggleChildrenCheckbox(child);
-        } else {
-          child.state = 0;
-          this.toggleChildrenCheckbox(child);
-        }
-      })
+        child.state = state;
+        this.toggleChildrenCheckbox(child, state);
+      });
     }
   }
-
-  checkedParent(node: any) {
-    if (this.parent.state === 0) {
-      this.parent.state = 2;
-    } else {
-      this.parent.state = 0;
-    }
-  }
-
 }
 

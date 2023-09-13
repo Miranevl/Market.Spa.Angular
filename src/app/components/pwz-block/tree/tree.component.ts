@@ -1,13 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { TrackingPwzService } from 'src/app/services/tracker/TrackingPwz/tracking-pwz.service';
-import { TreeNodeComponent } from './tree-node/tree-node.component';
+import { TreeData } from './tree.type';
 
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
 })
 export class TreeComponent {
-  treeData: any[] = [];
+  treeData !: TreeData;
 
   constructor(private trackingPwzService: TrackingPwzService) { }
 
@@ -20,12 +20,13 @@ export class TreeComponent {
     )
   }
 
-  addCheckedProperty(items: any[]) {
+  addCheckedProperty(items: any[], parent: any = null) {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
+      item.parent = parent;
       item.state = 0;
       if (item.children) {
-        this.addCheckedProperty(item.children);
+        this.addCheckedProperty(item.children, item);
       }
     }
   }
