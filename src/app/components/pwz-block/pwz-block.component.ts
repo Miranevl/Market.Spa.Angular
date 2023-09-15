@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { TrackingPwzService } from 'src/app/services/tracker/TrackingPwz/tracking-pwz.service';
 
 @Component({
@@ -6,8 +6,8 @@ import { TrackingPwzService } from 'src/app/services/tracker/TrackingPwz/trackin
   templateUrl: './pwz-block.component.html',
 })
 export class PwzBlockComponent {
+  @Input() id: any;
 
   constructor(private trackingPwzService: TrackingPwzService) { }
-
 
 }

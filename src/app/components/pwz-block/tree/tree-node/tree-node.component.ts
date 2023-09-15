@@ -12,8 +12,6 @@ export class TreeNodeComponent {
   isExpanded?: boolean;
   constructor() { }
 
-
-
   toggleExpansion() {
     this.isExpanded = !this.isExpanded;
   }
@@ -40,7 +38,7 @@ export class TreeNodeComponent {
       } else {
         parent.state = 0; // В противном случае, ни один ребенок не выбран
       }
-      this.updateParentState(parent.parent);
+      this.updateParentState(parent.parent); // Рекурсивно обновляем состояние родителей
     }
   }
 

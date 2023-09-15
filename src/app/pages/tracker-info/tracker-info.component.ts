@@ -7,12 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TrackerInfoComponent implements OnInit {
   title: string | null = '';
+  id!: string | null;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.title = params.get('title');
+      this.id = params.get('id');
     });
   }
 
