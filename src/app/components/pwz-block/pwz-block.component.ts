@@ -7,7 +7,8 @@ import { TrackingPwzService } from 'src/app/services/tracker/TrackingPwz/trackin
 })
 export class PwzBlockComponent {
   @Input() id: any;
+  constructor(public trackingPwzService: TrackingPwzService) { }
 
-  constructor(private trackingPwzService: TrackingPwzService) { }
+
 
 }

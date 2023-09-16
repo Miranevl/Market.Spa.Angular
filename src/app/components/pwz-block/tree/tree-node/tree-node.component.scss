@@ -13,3 +13,16 @@
 .collapse-button.opened::after {
     content: '-';
 }
+
+.view-address-box {
+    height: 0.8rem;
+    border-radius: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: ease-in-out 0.2s;
+}
+
+.view-address-box:hover {
+    filter: invert(80%) sepia(75%) saturate(1%) hue-rotate(2deg) brightness(120%) contrast(89%);
+}

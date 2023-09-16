@@ -52,16 +52,19 @@ export class TreeComponent {
 
   updateParentState(parent: any) {
     if (parent) {
-      const childStates = parent.children.map((child: any) => child.state);
-      if (childStates.every((state: number) => state === 1)) {
-        parent.state = 1; // Если все дети выбраны, родитель выбран
-      } else if (childStates.some((state: number) => state === 1 || state === 2)) {
-        parent.state = 2; // Если хотя бы один ребенок выбран или частично выбран, родитель частично выбран
-      } else {
-        parent.state = 0; // В противном случае, ни один ребенок не выбран
+      if (parent.children && parent.children.length > 0) {
+        const childStates = parent.children.map((child: any) => child.state);
+        if (childStates.every((state: number) => state === 1)) {
+          parent.state = 1; // Если все дети выбраны, родитель выбран
+        } else if (childStates.some((state: number) => state === 1 || state === 2)) {
+          parent.state = 2; // Если хотя бы один ребенок выбран или частично выбран, родитель частично выбран
+        } else {
+          parent.state = 0; // В противном случае, ни один ребенок не выбран
+        }
+        this.updateParentState(parent.parent); // Рекурсивно обновляем состояние родителей
       }
-      this.updateParentState(parent.parent); // Рекурсивно обновляем состояние родителей
     }
+
   }
 
   addCheckedProperty(items: any[], parent: any = null) {
@@ -76,12 +79,12 @@ export class TreeComponent {
   };
 
   checkedTreeData() {
-    const traverse = (node: TreeNode) => {
-      if (node.state === 1 && node.id) {
+    const traverse = (node: any) => {
+      if (node.id && node.state === 1) {
         this.arrData.push(node.id);
       }
       if (node.children) {
-        node.children.forEach((child: TreeNode) => {
+        node.children.forEach((child: any) => {
           traverse(child);
         });
       }
@@ -91,11 +94,13 @@ export class TreeComponent {
     });
   }
 
+
   refresh() {
     this.trackingPwzService.getMyPwz(this.id).subscribe(
       (response: any) => {
         this.currentTreeData = response.data;
         this.setCheckedStateFromCurrentData(this.treeData, this.currentTreeData);
+        console.log(this.currentTreeData);
       }
     );
   }
@@ -115,8 +120,8 @@ export class TreeComponent {
   }
 
   diffPwz() {
-    this.diffPwzTree.emit();
     this.checkedTreeData();
+    this.diffPwzTree.emit();
     const myPwzCurrent = new Set(this.currentTreeData.map((item) => item.id));
     const myPwzSelected = new Set(this.arrData.map((item: any) => item))
     const addedPwz = [...myPwzSelected].filter((item: any) => !myPwzCurrent.has(item));
@@ -151,6 +156,5 @@ export class TreeComponent {
       }
     }
   };
-
 
 }

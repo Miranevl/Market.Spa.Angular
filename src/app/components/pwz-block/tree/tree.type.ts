@@ -4,6 +4,7 @@ export interface TreeDataItem {
     title: string;
     children?: TreeNode[];
     id?: number;
+    state: number;
 }
 
 export interface TreeNode {

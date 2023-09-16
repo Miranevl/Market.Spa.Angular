@@ -1,4 +1,6 @@
 <div class="flex gap-2">
+    <img (click)="getInfoOnClick(node.id)" class="view-address-box" *ngIf="node.id"
+        src="assets/icons/arrow-up-right-square-fill.svg" alt="viewAddress">
     <app-tree-checkbox (click)="toggleCheckbox(this.node)" [state]="node.state"></app-tree-checkbox>
     <button (click)="toggleExpansion()" [class.opened]="isExpanded" class="collapse-button"
         *ngIf="node.children && node.children.length > 0"></button>

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TrackingPwzService {
-
+  detailsData: any;
   constructor(private httpClient: HttpClient) { }
 
   getTreePwz(marketplaceId: number) {
@@ -17,7 +17,7 @@ export class TrackingPwzService {
   }
 
   getMyPwz(trackingId: number) {
-    return this.httpClient.get(`/api/TrackingPwzGroups/${trackingId}`);
+    return this.httpClient.get(`/api/TrackingPwzGroups/${trackingId}/${0}/${5000}`);
   };
 
   removeMyPwz(trackingId: number, pwzGroupsIds: number[]) {

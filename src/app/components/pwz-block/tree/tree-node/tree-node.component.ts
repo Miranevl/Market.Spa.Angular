@@ -1,5 +1,5 @@
-import { Component, Host, Input } from '@angular/core';
-import { TreeComponent } from '../tree.component';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TrackingPwzService } from 'src/app/services/tracker/TrackingPwz/tracking-pwz.service';
 
 @Component({
   selector: 'app-tree-node',
@@ -9,8 +9,10 @@ import { TreeComponent } from '../tree.component';
 export class TreeNodeComponent {
   @Input() node: any;
   @Input() parent: any;
+
   isExpanded?: boolean;
-  constructor() { }
+  isClicked: boolean = false;
+  constructor(private trackingPwzService: TrackingPwzService) { }
 
   toggleExpansion() {
     this.isExpanded = !this.isExpanded;
@@ -50,5 +52,25 @@ export class TreeNodeComponent {
       });
     }
   }
+
+  getInfoOnClick(pwzGroupId: number) {
+    if (this.isClicked === false) {
+      if (this.node.id) {
+        this.trackingPwzService.getPwzDetails(pwzGroupId).subscribe(
+          (response: any) => {
+            this.trackingPwzService.detailsData = response.data;
+            this.isClicked = true;
+          },
+          err => {
+            console.log(err);
+          }
+        )
+      }
+    } else {
+      this.trackingPwzService.detailsData = [];
+      this.isClicked = false;
+    }
+  }
+
 }
 
