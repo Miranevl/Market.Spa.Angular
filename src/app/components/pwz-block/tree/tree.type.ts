@@ -13,6 +13,7 @@ export interface TreeNode {
     id?: number
     state: number,
     level: number,
-    parent: string | null,
+    parent: TreeNode | null,
 }
+
 

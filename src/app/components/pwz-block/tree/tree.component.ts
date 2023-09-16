@@ -9,7 +9,7 @@ import { TreeData, TreeNode } from './tree.type';
 export class TreeComponent {
   treeData !: TreeData;
   currentTreeData !: TreeData;
-  arrData: any = [];
+  arrData: number[] = [];
 
   @Input() id!: number;
   @Output() diffPwzTree = new EventEmitter<void>();
@@ -19,13 +19,24 @@ export class TreeComponent {
   constructor(private trackingPwzService: TrackingPwzService) { }
 
   ngOnInit(): void {
-    this.trackingPwzService.getTreePwz(1).subscribe(
+    this.loadTreeData(1);
+    this.refresh()
+  }
+
+  private loadTreeData(id: number): void {
+    this.trackingPwzService.getTreePwz(id).subscribe((response: any) => {
+      this.treeData = response.data;
+      this.addCheckedProperty(this.treeData);
+    });
+  }
+
+  refresh(): void {
+    this.trackingPwzService.getMyPwz(this.id).subscribe(
       (response: any) => {
-        this.treeData = response.data;
-        this.addCheckedProperty(this.treeData);
+        this.currentTreeData = response.data;
+        this.setCheckedStateFromCurrentData(this.treeData, this.currentTreeData);
       }
     );
-    this.refresh()
   }
 
   setCheckedStateFromCurrentData(treeData: any[], currentData: any[]) {
@@ -50,10 +61,10 @@ export class TreeComponent {
     });
   }
 
-  updateParentState(parent: any) {
+  updateParentState(parent: TreeNode) {
     if (parent) {
       if (parent.children && parent.children.length > 0) {
-        const childStates = parent.children.map((child: any) => child.state);
+        const childStates = parent.children.map((child: TreeNode) => child.state);
         if (childStates.every((state: number) => state === 1)) {
           parent.state = 1; // Если все дети выбраны, родитель выбран
         } else if (childStates.some((state: number) => state === 1 || state === 2)) {
@@ -61,30 +72,31 @@ export class TreeComponent {
         } else {
           parent.state = 0; // В противном случае, ни один ребенок не выбран
         }
-        this.updateParentState(parent.parent); // Рекурсивно обновляем состояние родителей
+        if (parent.parent && typeof parent.parent === 'object') {
+          this.updateParentState(parent.parent as TreeNode); // Рекурсивно обновляем состояние родителей
+        }
       }
     }
-
   }
 
-  addCheckedProperty(items: any[], parent: any = null) {
+  addCheckedProperty(items: any[], parent: TreeNode | null = null) {
     for (let i = 0; i < items.length; i++) {
-      const item = items[i];
+      const item: TreeNode = items[i];
       item.parent = parent;
       item.state = 0;
       if (item.children) {
         this.addCheckedProperty(item.children, item);
       }
     }
-  };
+  }
 
   checkedTreeData() {
-    const traverse = (node: any) => {
+    const traverse = (node: TreeNode) => {
       if (node.id && node.state === 1) {
         this.arrData.push(node.id);
       }
       if (node.children) {
-        node.children.forEach((child: any) => {
+        node.children.forEach((child: TreeNode) => {
           traverse(child);
         });
       }
@@ -94,20 +106,8 @@ export class TreeComponent {
     });
   }
 
-
-  refresh() {
-    this.trackingPwzService.getMyPwz(this.id).subscribe(
-      (response: any) => {
-        this.currentTreeData = response.data;
-        this.setCheckedStateFromCurrentData(this.treeData, this.currentTreeData);
-        console.log(this.currentTreeData);
-      }
-    );
-  }
-
   deleteAll() {
     this.deleteAllData.emit();
-
     this.trackingPwzService.clearAllMyPwz(this.id).subscribe(
       () => {
         alert('все удалено');
@@ -123,13 +123,16 @@ export class TreeComponent {
     this.checkedTreeData();
     this.diffPwzTree.emit();
     const myPwzCurrent = new Set(this.currentTreeData.map((item) => item.id));
-    const myPwzSelected = new Set(this.arrData.map((item: any) => item))
-    const addedPwz = [...myPwzSelected].filter((item: any) => !myPwzCurrent.has(item));
-    const removedPwz = this.currentTreeData.filter((item) => !myPwzSelected.has(item.id)).map((node) => node.id);
+    const myPwzSelected = new Set(this.arrData.map((item: number) => item))
+    const addedPwz = [...myPwzSelected].filter((item: number) => !myPwzCurrent.has(item));
+    const removedPwz = this.currentTreeData
+      .filter((item) => item.id !== undefined)
+      .filter((item) => !myPwzSelected.has(item.id as number))
+      .map((node) => node.id as number);
     this.handleChanges(addedPwz, removedPwz);
   };
 
-  handleChanges(addedPwz: any[], removedPwz: any[]) {
+  handleChanges(addedPwz: number[], removedPwz: number[]) {
     if (this.id) {
       if (removedPwz.length > 0) {
         this.trackingPwzService.removeMyPwz(this.id, removedPwz).subscribe(
