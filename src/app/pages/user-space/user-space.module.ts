@@ -21,10 +21,12 @@ import { TreeComponent } from 'src/app/components/pwz-block/tree/tree.component'
 import { TreeNodeComponent } from 'src/app/components/pwz-block/tree/tree-node/tree-node.component';
 import { TreeBranchComponent } from 'src/app/components/pwz-block/tree/tree-branch/tree-branch.component';
 import { TreeCheckboxComponent } from 'src/app/components/pwz-block/tree/tree-checkbox/tree-checkbox.component';
+import { AuthGuard } from 'src/app/services/auth.guard';
 
 const appRoutes: Routes = [
   {
     path: '',
+    canActivate: [AuthGuard],
     component: UserSpaceComponent,
     children: [
       { path: 'monitoring-position', component: MonitoringPositionComponent },

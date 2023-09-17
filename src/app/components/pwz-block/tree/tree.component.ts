@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TrackingPwzService } from 'src/app/services/tracker/TrackingPwz/tracking-pwz.service';
 import { TreeData, TreeNode } from './tree.type';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-tree',
@@ -16,7 +17,7 @@ export class TreeComponent {
   @Output() deleteAllData = new EventEmitter<void>();
 
 
-  constructor(private trackingPwzService: TrackingPwzService) { }
+  constructor(private trackingPwzService: TrackingPwzService, public generalService: GeneralService) { }
 
   ngOnInit(): void {
     this.loadTreeData(1);
@@ -108,15 +109,19 @@ export class TreeComponent {
 
   deleteAll() {
     this.deleteAllData.emit();
-    this.trackingPwzService.clearAllMyPwz(this.id).subscribe(
-      () => {
-        alert('все удалено');
-        this.refresh()
-      },
-      err => {
-        console.log(err);
-      }
-    )
+    this.generalService.setCallback(() => {
+      this.trackingPwzService.clearAllMyPwz(this.id).subscribe(
+        () => {
+          alert('все удалено');
+          this.refresh()
+          this.generalService.showDialog = false;
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    })
+    this.generalService.showDialog = true;
   }
 
   diffPwz() {
