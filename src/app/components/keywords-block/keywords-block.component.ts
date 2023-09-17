@@ -1,6 +1,7 @@
 import { CSP_NONCE, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { GeneralService } from 'src/app/services/general.service';
 import { TrackingKeywordsService } from 'src/app/services/tracker/TrackingKeywords/tracking-keywords.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { TrackingKeywordsService } from 'src/app/services/tracker/TrackingKeywor
   templateUrl: './keywords-block.component.html',
 })
 export class KeywordsBlockComponent {
-  id: number | undefined;
+  id!: number | undefined;
   editorOptions = { theme: 'vs' };
   code: string = '';
   data: any = {}
@@ -16,7 +17,7 @@ export class KeywordsBlockComponent {
   dataKeywords: any = [{}];
   private keywordInput$ = new Subject<string>();
 
-  constructor(private TrackingKeywordsService: TrackingKeywordsService, private route: ActivatedRoute) { }
+  constructor(private TrackingKeywordsService: TrackingKeywordsService, private route: ActivatedRoute, public generalService: GeneralService) { }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const idString = params.get('id');
@@ -78,18 +79,25 @@ export class KeywordsBlockComponent {
   };
 
   deleteAllTrackers() {
-    if (this.id) {
-      this.TrackingKeywordsService.clearAllTrackingKeywords(this.id).subscribe(
-        response => {
-          alert('Все ключевые слова были удалены!');
-          this.refreshTrackingKeywords()
-        },
-        error => {
-          console.log(error);
-        }
-      )
-    }
+    this.generalService.setCallback(() => {
+      if (this.id) {
+        this.TrackingKeywordsService.clearAllTrackingKeywords(this.id).subscribe(
+          response => {
+            alert('Все ключевые слова были удалены!');
+            this.refreshTrackingKeywords()
+            this.generalService.showDialog = false;
+
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    })
+    this.generalService.showDialog = true;
   }
+
+
 
   diffTrackerKeywords() {
     if (this.id) {

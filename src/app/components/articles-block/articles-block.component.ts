@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GeneralService } from 'src/app/services/general.service';
 import { TrackingArticlesService } from 'src/app/services/tracker/TrackingArticles/tracking-articles.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class ArticlesBlockComponent {
   code: string = '';
   data: any = {}
 
-  constructor(private trackingArticlesService: TrackingArticlesService, private route: ActivatedRoute) { }
+  constructor(private trackingArticlesService: TrackingArticlesService, private route: ActivatedRoute, public generalService: GeneralService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -107,17 +108,21 @@ export class ArticlesBlockComponent {
 
 
   deleteAllTrackingArticles() {
-    if (this.id) {
-      this.trackingArticlesService.clearTrackingArticles(this.id).subscribe(
-        () => {
-          alert('Все аритукла удалены');
-          this.refreshTrackingArticles();
-        },
-        error => {
-          console.log(error);
-        }
-      )
-    }
+    this.generalService.setCallback(() => {
+      if (this.id) {
+        this.trackingArticlesService.clearTrackingArticles(this.id).subscribe(
+          () => {
+            alert('Все аритукла удалены');
+            this.refreshTrackingArticles();
+            this.generalService.showDialog = false;
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    });
+    this.generalService.showDialog = true;
   };
 
 }
