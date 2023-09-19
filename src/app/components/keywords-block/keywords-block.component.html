@@ -1,41 +1,48 @@
-<div class="bg-slate-50 rounded-[5px] mr-5 shadow-lg shadow-black-500/50  text-center p-6 mt-3">
-    <div class='flex flex-col text-start'>
+<div class="flex-1 bg-slate-50 rounded-[5px] mr-5 shadow-lg shadow-black-500/50 mt-3">
+    <div class='flex flex-col md:text-start text-center'>
         <h3 class='bg-slate-50 text-2xl font-semibold mt-3'>Ключевые слова</h3>
         <p class='bg-slate-50 mt-2'>Слова или словосочетания в поисковых запросах, <br /> по которым будут
             показываться ваши объявления.</p>
     </div>
-    <div class="flex justify-around  mt-10  bg-slate-100  h-[550px] rounded-md">
-        <div class='w-6/12'>
-            <span class='text-2xl font-semibold'>Добавить в ручную</span>
-            <ngx-monaco-editor style="height: 400px ; width: 450px; text-align: start;" [options]="editorOptions"
-                [(ngModel)]="code"></ngx-monaco-editor>
-            <div class='flex flex-col items-center mt-2 gap-2'>
-                <button (click)="diffTrackerKeywords()"
-                    class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Сохранить</button>
-                <button (click)="deleteAllTrackers()"
-                    class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Удалить
-                    все</button>
+    <div class="flex mt-5 p-5 rounded-[4px] w-full bg-slate-200">
+        <div class="flex flex-col md:flex-row w-full justify-center  gap-5">
+            <div class='md:w-6/12 w-full'>
+                <span class='text-2xl font-semibold'>Добавить в ручную</span>
+                <ngx-monaco-editor class="flex" style="height: 50vh;" [options]="editorOptions"
+                    [(ngModel)]="code"></ngx-monaco-editor>
+                <div class='flex flex-col items-center mt-2 gap-2'>
+                    <button (click)="diffTrackerKeywords()"
+                        class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Сохранить</button>
+                    <button (click)="deleteAllTrackers()"
+                        class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Удалить
+                        все</button>
+                </div>
+            </div>
+            <div class='md:w-6/12 w-full'>
+                <div class="flex flex-col items-center">
+                    <span class='text-2xl font-semibold'>Подбор ключевых слов:</span>
+                    <input class="w-full h-[30px] mt-4 bg-slate-300 placeholder:indent-4 rounded-[5px] indent-4"
+                        type="text" placeholder='Введите ключевое слово' [(ngModel)]="keyword"
+                        (input)="suggestKeyword(keyword)" />
+                    <div class="p-2 h-[400px] w-full">
+                        <ul>
+                            <li class="flex justify-between items-center rounded-[5px] mt-3 ml-3 bg-slate-300"
+                                *ngFor="let keywordItem of dataKeywords.data">
+                                <span class="ml-2">{{ keywordItem.text }}</span>
+                                <img (click)="addedOneTrackingKeyword([keywordItem.text])"
+                                    class="transition ease-in-out hover:brightness-50 after:bg-fuchsia-500 h-6 mr-3"
+                                    src="assets/icons/sign-intersection-fill.svg" alt="addKeyword">
+                            </li>
+                        </ul>
+                    </div>
+                    <button (click)="addedAllKeywords(dataKeywords.data)"
+                        class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Добавить
+                        все</button>
+                </div>
+
             </div>
         </div>
-        <div class='w-6/12'>
-            <span class='text-2xl font-semibold'>Подбор ключевых слов:</span>
-            <input class="w-[350px] h-[30px] mt-4 bg-slate-300 placeholder:indent-4 rounded-[5px] indent-4" type="text"
-                placeholder='Введите ключевое слово' [(ngModel)]="keyword" (input)="suggestKeyword(keyword)" />
-            <div class="p-2 h-[400px]">
-                <ul>
-                    <li class="flex justify-between items-center rounded-[5px] mt-3 ml-3 bg-slate-300"
-                        *ngFor="let keywordItem of dataKeywords.data">
-                        <span class="ml-2">{{ keywordItem.text }}</span>
-                        <img (click)="addedOneTrackingKeyword([keywordItem.text])"
-                            class="transition ease-in-out hover:brightness-50 after:bg-fuchsia-500 h-6 mr-3"
-                            src="assets/icons/sign-intersection-fill.svg" alt="addKeyword">
-                    </li>
-                </ul>
-            </div>
-            <button (click)="addedAllKeywords(dataKeywords.data)"
-                class="bg-slate-600 rounded-[10px] w-[150px] h-8 text-white border transition ease-in-out delay-100 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed">Добавить
-                все</button>
-        </div>
+
     </div>
 
 </div>
